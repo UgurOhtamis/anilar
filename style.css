@@ -1,0 +1,412 @@
+/* ============================================
+   ROMANTIC MEMORY WEBSITE - STYLES
+   Mobile-first, Valentine aesthetic
+   ============================================ */
+
+:root {
+  --primary-dark: rgb(48, 54, 79);
+  --muted-blue: rgb(172, 186, 196);
+  --soft-beige: rgb(225, 217, 188);
+  --light-cream: rgb(240, 240, 219);
+  --accent-pink: rgb(220, 130, 150);
+  --transition-duration: 0.4s;
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: 'Caveat', cursive;
+  background: var(--primary-dark);
+  color: var(--primary-dark);
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* ============================================
+   YOUTUBE HIDDEN CONTAINER
+   ============================================ */
+.youtube-hidden {
+  position: fixed;
+  top: -9999px;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.youtube-hidden iframe {
+  width: 1px;
+  height: 1px;
+}
+
+/* ============================================
+   CANVAS - FULLSCREEN BEHIND CONTENT
+   ============================================ */
+#hearts-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ============================================
+   MAIN APP CONTAINER
+   ============================================ */
+.app {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ============================================
+   VIEW SECTIONS
+   ============================================ */
+.view {
+  display: none;
+  width: 100%;
+  max-width: 42rem;
+  animation: fadeIn 0.5s var(--ease-smooth) forwards;
+}
+
+.view.active {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.view.exit {
+  animation: fadeOutSlide 0.4s var(--ease-smooth) forwards;
+}
+
+/* ============================================
+   QUESTION VIEW
+   ============================================ */
+.question-title {
+  font-size: clamp(1.5rem, 5vw, 2.2rem);
+  font-weight: 600;
+  text-align: center;
+  color: var(--light-cream);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  line-height: 1.4;
+  padding: 0 0.5rem;
+}
+
+.images-container {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 0.5rem;
+}
+
+/* Image choice wrapper */
+.choice-card {
+  flex: 1 1 140px;
+  max-width: 180px;
+  cursor: pointer;
+  perspective: 800px;
+}
+
+.choice-card img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  transition: transform var(--transition-duration) var(--ease-smooth),
+              filter var(--transition-duration) var(--ease-smooth);
+  display: block;
+}
+
+.choice-card.left:hover img {
+  transform: scale(1.08) rotate(-3deg);
+}
+
+.choice-card.right:hover img {
+  transform: scale(1.08) rotate(3deg);
+}
+
+.choice-card img.blurred {
+  filter: blur(12px);
+  transition: filter 0.6s var(--ease-smooth);
+}
+
+.choice-card img.unblurred {
+  filter: blur(0);
+}
+
+/* ============================================
+   RESULTS VIEW
+   ============================================ */
+#results-view .selected-images {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.result-item {
+  opacity: 0;
+  animation: resultFadeIn 0.8s var(--ease-smooth) forwards;
+}
+
+.result-item img {
+  width: 100%;
+  max-width: 280px;
+  height: auto;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.gallery-btn {
+  font-family: 'Caveat', cursive;
+  font-size: 1.8rem;
+  font-weight: 600;
+  padding: 0.75rem 2rem;
+  background: var(--accent-pink);
+  color: var(--light-cream);
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(220, 130, 150, 0.4);
+  transition: transform 0.2s, box-shadow 0.2s;
+  opacity: 0;
+  animation: resultFadeIn 0.6s var(--ease-smooth) 3s forwards;
+  margin-top: 1rem;
+}
+
+.gallery-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 24px rgba(220, 130, 150, 0.5);
+}
+
+.gallery-btn:active {
+  transform: scale(0.98);
+}
+
+/* ============================================
+   GALLERY VIEW
+   ============================================ */
+.gallery-back {
+  font-family: 'Caveat', cursive;
+  font-size: 1.4rem;
+  color: var(--light-cream);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  align-self: flex-start;
+  opacity: 0.9;
+  transition: opacity 0.2s;
+}
+
+.gallery-back:hover {
+  opacity: 1;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  width: 100%;
+  max-width: 36rem;
+}
+
+.gallery-item {
+  cursor: pointer;
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s;
+}
+
+.gallery-item:hover {
+  transform: scale(1.02);
+}
+
+.gallery-item img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  display: block;
+}
+
+/* ============================================
+   MODAL
+   ============================================ */
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(48, 54, 79, 0.95);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  opacity: 0;
+  transition: opacity 0.3s var(--ease-smooth);
+}
+
+.modal.active {
+  display: flex;
+  opacity: 1;
+}
+
+.modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 48px;
+  height: 48px;
+  font-size: 2rem;
+  color: var(--light-cream);
+  background: rgba(0, 0, 0, 0.4);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 101;
+  transition: background 0.2s, transform 0.2s;
+  line-height: 1;
+  padding-bottom: 4px;
+}
+
+.modal-close:hover {
+  background: rgba(0, 0, 0, 0.6);
+  transform: scale(1.05);
+}
+
+.modal-content {
+  max-width: 90vw;
+  max-height: 85vh;
+  overflow: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content img {
+  max-width: 100%;
+  max-height: 85vh;
+  object-fit: contain;
+  transition: transform 0.2s;
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOutSlide {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes resultFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================================
+   RESPONSIVE - TABLET & DESKTOP
+   ============================================ */
+@media (min-width: 480px) {
+  .choice-card {
+    flex: 0 1 180px;
+    max-width: 200px;
+  }
+
+  .gallery-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 768px) {
+  .app {
+    padding: 2rem;
+  }
+
+  .images-container {
+    gap: 1.5rem;
+  }
+
+  .choice-card {
+    flex: 0 1 200px;
+    max-width: 220px;
+  }
+
+  .result-item img {
+    max-width: 320px;
+  }
+
+  .gallery-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .question-title {
+    font-size: 2.5rem;
+  }
+
+  .choice-card {
+    max-width: 240px;
+  }
+
+  .gallery-grid {
+    max-width: 48rem;
+  }
+}

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anılar - Romantik Anılar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Hidden YouTube player for background music -->
+  <div id="youtube-container" class="youtube-hidden" aria-hidden="true">
+    <iframe
+      id="youtube-player"
+      src="https://www.youtube.com/embed/muTUmQnqGDY?autoplay=1&loop=1&playlist=muTUmQnqGDY&controls=0&showinfo=0&rel=0&modestbranding=1"
+      allow="autoplay; encrypted-media"
+      allowfullscreen
+      title="Background music"
+    ></iframe>
+  </div>
+
+  <!-- Canvas for falling hearts -->
+  <canvas id="hearts-canvas" aria-hidden="true"></canvas>
+
+  <!-- Main content container -->
+  <main id="app" class="app">
+    <!-- Question view -->
+    <section id="question-view" class="view active">
+      <h1 id="question-title" class="question-title"></h1>
+      <div id="images-container" class="images-container"></div>
+    </section>
+
+    <!-- Results view -->
+    <section id="results-view" class="view">
+      <div id="selected-images" class="selected-images"></div>
+      <button id="gallery-btn" class="gallery-btn">galeriii</button>
+    </section>
+
+    <!-- Gallery view -->
+    <section id="gallery-view" class="view">
+      <button id="gallery-back" class="gallery-back" aria-label="Seçimlere dön">← geri</button>
+      <div id="gallery-grid" class="gallery-grid"></div>
+    </section>
+  </main>
+
+  <!-- Modal for image zoom -->
+  <div id="modal" class="modal" role="dialog" aria-modal="true" aria-label="Resim görüntüleyici">
+    <button id="modal-close" class="modal-close" aria-label="Kapat">&times;</button>
+    <div id="modal-content" class="modal-content">
+      <img id="modal-image" src="" alt="Büyütülmüş fotoğraf">
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
