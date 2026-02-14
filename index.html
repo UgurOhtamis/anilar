@@ -10,15 +10,15 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Hidden YouTube player for background music -->
+  <!-- Hidden YouTube player (created via API after user tap) -->
   <div id="youtube-container" class="youtube-hidden" aria-hidden="true">
-    <iframe
-      id="youtube-player"
-      src="https://www.youtube.com/embed/muTUmQnqGDY?autoplay=1&loop=1&playlist=muTUmQnqGDY&controls=0&showinfo=0&rel=0&modestbranding=1"
-      allow="autoplay; encrypted-media"
-      allowfullscreen
-      title="Background music"
-    ></iframe>
+    <div id="youtube-player"></div>
+  </div>
+
+  <!-- Müziği başlatmak için tıklama katmanı -->
+  <div id="music-overlay" class="music-overlay">
+    <p class="music-overlay-text">Müzik eşliğinde başlamak için tıkla</p>
+    <button type="button" id="music-start-btn" class="music-start-btn">Başla</button>
   </div>
 
   <!-- Canvas for falling hearts -->
@@ -53,6 +53,7 @@
     </div>
   </div>
 
+  <script src="https://www.youtube.com/iframe_api" async></script>
   <script src="script.js"></script>
 </body>
 </html>

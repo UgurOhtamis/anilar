@@ -55,6 +55,55 @@ body {
 }
 
 /* ============================================
+   MUSIC START OVERLAY
+   ============================================ */
+.music-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: rgba(48, 54, 79, 0.92);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 2rem;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+.music-overlay.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.music-overlay-text {
+  font-family: 'Caveat', cursive;
+  font-size: clamp(1.4rem, 4vw, 2rem);
+  color: var(--light-cream);
+  text-align: center;
+}
+
+.music-start-btn {
+  font-family: 'Caveat', cursive;
+  font-size: 1.8rem;
+  font-weight: 600;
+  padding: 0.75rem 2.5rem;
+  background: var(--accent-pink);
+  color: var(--light-cream);
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(220, 130, 150, 0.4);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.music-start-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 24px rgba(220, 130, 150, 0.5);
+}
+
+/* ============================================
    CANVAS - FULLSCREEN BEHIND CONTENT
    ============================================ */
 #hearts-canvas {

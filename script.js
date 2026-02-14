@@ -59,8 +59,52 @@ const DOM = {
   modal: document.getElementById('modal'),
   modalClose: document.getElementById('modal-close'),
   modalImage: document.getElementById('modal-image'),
-  modalContent: document.getElementById('modal-content')
+  modalContent: document.getElementById('modal-content'),
+  musicOverlay: document.getElementById('music-overlay'),
+  musicStartBtn: document.getElementById('music-start-btn')
 };
+
+// ============================================
+// YOUTUBE BACKGROUND MUSIC (user gesture required for sound)
+// ============================================
+let youtubePlayer = null;
+
+window.onYouTubeIframeAPIReady = function () {
+  youtubePlayer = new YT.Player('youtube-player', {
+    height: '1',
+    width: '1',
+    videoId: 'muTUmQnqGDY',
+    playerVars: {
+      autoplay: 1,
+      mute: 1,
+      loop: 1,
+      playlist: 'muTUmQnqGDY',
+      controls: 0
+    }
+  });
+};
+
+function startMusicAndHideOverlay() {
+  function tryUnmute() {
+    if (youtubePlayer && typeof youtubePlayer.unMute === 'function') {
+      youtubePlayer.unMute();
+      youtubePlayer.playVideo();
+      return true;
+    }
+    return false;
+  }
+  if (!tryUnmute()) {
+    const interval = setInterval(function () {
+      if (tryUnmute()) clearInterval(interval);
+    }, 200);
+    setTimeout(function () { clearInterval(interval); }, 5000);
+  }
+  if (DOM.musicOverlay) DOM.musicOverlay.classList.add('hidden');
+}
+
+if (DOM.musicStartBtn) {
+  DOM.musicStartBtn.addEventListener('click', startMusicAndHideOverlay);
+}
 
 // ============================================
 // UTILITY: Shuffle array (Fisher-Yates)
