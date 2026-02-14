@@ -59,13 +59,11 @@ const DOM = {
   modal: document.getElementById('modal'),
   modalClose: document.getElementById('modal-close'),
   modalImage: document.getElementById('modal-image'),
-  modalContent: document.getElementById('modal-content'),
-  musicOverlay: document.getElementById('music-overlay'),
-  musicStartBtn: document.getElementById('music-start-btn')
+  modalContent: document.getElementById('modal-content')
 };
 
 // ============================================
-// YOUTUBE BACKGROUND MUSIC (user gesture required for sound)
+// YOUTUBE BACKGROUND MUSIC (ilk fotoğraf seçilince başlar)
 // ============================================
 let youtubePlayer = null;
 
@@ -84,26 +82,11 @@ window.onYouTubeIframeAPIReady = function () {
   });
 };
 
-function startMusicAndHideOverlay() {
-  function tryUnmute() {
-    if (youtubePlayer && typeof youtubePlayer.unMute === 'function') {
-      youtubePlayer.unMute();
-      youtubePlayer.playVideo();
-      return true;
-    }
-    return false;
+function startBackgroundMusic() {
+  if (youtubePlayer && typeof youtubePlayer.unMute === 'function') {
+    youtubePlayer.unMute();
+    youtubePlayer.playVideo();
   }
-  if (!tryUnmute()) {
-    const interval = setInterval(function () {
-      if (tryUnmute()) clearInterval(interval);
-    }, 200);
-    setTimeout(function () { clearInterval(interval); }, 5000);
-  }
-  if (DOM.musicOverlay) DOM.musicOverlay.classList.add('hidden');
-}
-
-if (DOM.musicStartBtn) {
-  DOM.musicStartBtn.addEventListener('click', startMusicAndHideOverlay);
 }
 
 // ============================================
@@ -236,6 +219,10 @@ function renderQuestion() {
 // IMAGE SELECTION HANDLER
 // ============================================
 function handleImageSelect(card, filename, isQ6) {
+  if (state.selectedImages.length === 0) {
+    startBackgroundMusic();
+  }
+
   const cards = DOM.imagesContainer.querySelectorAll('.choice-card');
 
   if (isQ6) {
